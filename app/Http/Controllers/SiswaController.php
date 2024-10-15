@@ -16,8 +16,18 @@ class SiswaController extends Controller
     {
         return view('siswa.tambah');
     }
-    function submit(Request $request)
+    public function submit(Request $request)
     {
+        
+        $request->validate([
+            'nis' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'addres' => 'required|string|max:255',
+            'number' => 'required|numeric',
+            'gender' => 'required|string|max:10'
+        ]);
+
+        
         $siswa = new Siswa();
         $siswa->nis = $request->nis;
         $siswa->name = $request->name;
@@ -26,6 +36,12 @@ class SiswaController extends Controller
         $siswa->gender = $request->gender;
         $siswa->save();
 
+        
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Data siswa berhasil disimpan'], 200);
+        }
+
+       
         return redirect()->route('siswa.tampil');
     }
 
@@ -35,7 +51,7 @@ class SiswaController extends Controller
         return view('siswa.edit', compact('siswa'));
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $siswa = Siswa::find($id);
         $siswa->nis = $request->nis;
@@ -45,13 +61,16 @@ class SiswaController extends Controller
         $siswa->gender = $request->gender;
         $siswa->save();
 
-        return redirect()->route('siswa.tampil');
+        return response()->json(['message' => 'Data berhasil diupdate']);
     }
 
-    function delete($id){
+    public function delete($id)
+    {
         $siswa = Siswa::find($id);
         $siswa->delete();
+
         
-        return redirect()->route('siswa.tampil');
+        return response()->json(['message' => 'Data berhasil dihapus']);
     }
+
 }

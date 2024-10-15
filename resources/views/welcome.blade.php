@@ -13,5 +13,7 @@
     <div class="text-center mt-5">
     <a href="{{ route('siswa.tampil') }}" class="btn btn-primary">Mnagement Student</a>
     </div>
+
 </body>
+
 </html>

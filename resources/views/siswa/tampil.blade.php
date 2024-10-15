@@ -30,7 +30,7 @@
             <td>{{ $data->gender }}</td>
             <td>
                 <a href="{{ route('siswa.edit', $data->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                <form action="{{ route('siswa.delete', $data->id) }}" method="post">
+                <form action="{{ route('siswa.delete', $data->id) }}" method="post" id="form-ajax">
                     @csrf
                     <button class="btn btn-sm btn-danger mt-2">Delete</button>
                 </form>
